@@ -37,4 +37,4 @@ jobs:
 
             # Run container
             docker run -d -p 80:80 --name my-react-app my-react-app
-EOF  # <--- This line must NOT be indented!
+          EOF  # <--- This line must NOT be indented!
