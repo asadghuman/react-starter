@@ -13,11 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Copy source code to EC2
+        - name: Copy project to EC2 (excluding .git)
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
           chmod 600 key.pem
-          scp -o StrictHostKeyChecking=no -i key.pem -P ${{ secrets.SSH_PORT }} -r . ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USERNAME }}/react-app
+          rsync -avz --exclude='.git' -e "ssh -o StrictHostKeyChecking=no -i key.pem -p ${{ secrets.SSH_PORT }}" ./ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USERNAME }}/react-app
+      
 
       - name: SSH into EC2 and build+run Docker container
         run: |
