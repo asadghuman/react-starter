@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-        - name: Copy project to EC2 (excluding .git)
+      - name: Copy project to EC2 (excluding .git)
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > key.pem
           chmod 600 key.pem
